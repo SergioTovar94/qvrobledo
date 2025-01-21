@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-morado: #6f2dbd;
+  --color-naranja: #f46036;
+  --color-blanco: #ffffff;
+}
+
+body {
+  @apply bg-morado text-blanco;
+}
+
+.btn {
+  @apply px-6 py-3 rounded-full font-bold transition-all duration-300 ease-in-out;
+}
+
+.btn-primary {
+  @apply bg-naranja text-blanco hover:bg-naranja/80;
+}
+
+.btn-secondary {
+  @apply bg-blanco text-morado hover:bg-blanco/80;
+}
+
+.section-title {
+  @apply text-4xl md:text-5xl font-bold mb-6;
+}
+
+.section-subtitle {
+  @apply text-xl md:text-2xl mb-8;
+}
+

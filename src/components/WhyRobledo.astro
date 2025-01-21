@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<section id="why-robledo" class="py-20 bg-blanco text-[#6f2dbd]">
+  <div class="container mx-auto px-4">
+    <h2 class="section-title text-center">¿Por qué Robledo?</h2>
+    <div class="overflow-x-auto pb-6">
+      <div class="flex space-x-6 min-w-max">
+        {[
+          { year: '2010', achievement: 'Lideró la reforma educativa' },
+          { year: '2015', achievement: 'Impulsó políticas de transparencia' },
+          { year: '2018', achievement: 'Propuso plan de energías renovables' },
+          { year: '2020', achievement: 'Defendió derechos laborales' },
+          { year: '2022', achievement: 'Abogó por la igualdad de género' }
+        ].map((item) => (
+          <div class="bg-[#6f2dbd] text-white p-6 rounded-lg shadow-lg w-64 flex-shrink-0 transition-transform hover:scale-105">
+            <h3 class="text-2xl font-bold mb-2">{item.year}</h3>
+            <p>{item.achievement}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+

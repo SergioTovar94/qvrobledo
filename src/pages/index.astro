@@ -1,8 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
+import HeroSection from '../components/HeroSection.astro';
+import WhyRobledo from '../components/WhyRobledo.astro';
+import GetInvolved from '../components/GetInvolved.astro';
+import JoinForm from '../components/JoinForm.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
 ---
 
 <Layout title="Queremos que vuelva Robledo">
-Este es el contenido del de la página
+  <HeroSection />
+  <WhyRobledo />
+  <GetInvolved />
+  <JoinForm />
+  <section class="py-20 bg-[#6f2dbd] text-white text-center">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title">Sé parte del cambio ahora mismo</h2>
+      <div class="mt-8">
+        <WhatsAppCTA />
+      </div>
+    </div>
+  </section>
 </Layout>
+

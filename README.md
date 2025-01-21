@@ -25,3 +25,33 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Estructura:
+
+```text
+└── 📁qvrobledo
+    └── 📁public
+        └── favicon.svg
+    └── 📁src
+        └── 📁assets
+        └── 📁components
+            └── Footer.astro
+            └── GetInvolved.astro
+            └── Header.astro
+            └── HeroSection.astro
+            └── JoinForm.astro
+            └── WhatsAppCTA.astro
+            └── WhyRobledo.astro
+        └── 📁layouts
+            └── Layout.astro
+        └── 📁pages
+            └── index.astro
+        └── 📁styles
+            └── global.css
+    └── .gitignore
+    └── astro.config.mjs
+    └── package-lock.json
+    └── package.json
+    └── README.md
+    └── tsconfig.json
+```

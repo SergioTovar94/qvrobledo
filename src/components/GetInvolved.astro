@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<section id="get-involved" class="py-20 bg-[#f46036] text-white">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="section-title">Tu voz importa. Participa en nuestro movimiento.</h2>
+    <p class="section-subtitle">Eventos exclusivos, debates abiertos, y más.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+      {[
+        { icon: '🎤', title: 'Debates', description: 'Participa en discusiones sobre temas actuales' },
+        { icon: '🤝', title: 'Voluntariado', description: 'Únete a nuestras acciones comunitarias' },
+        { icon: '📚', title: 'Formación', description: 'Aprende sobre política y liderazgo' }
+      ].map((item) => (
+        <div class="bg-white text-[#6f2dbd] p-6 rounded-lg shadow-lg transition-transform hover:scale-105">
+          <div class="text-4xl mb-4">{item.icon}</div>
+          <h3 class="text-xl font-bold mb-2">{item.title}</h3>
+          <p>{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import WhatsAppCTA from './WhatsAppCTA.astro';
+---
+
+<section class="min-h-screen flex items-center justify-center text-center py-20">
+  <div class="container mx-auto px-4">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+      ¡Queremos que Robledo vuelva! 🎯
+    </h1>
+    <p class="text-xl md:text-2xl mb-12 animate-fade-in-delay">
+      Un movimiento político donde TÚ eres la voz del cambio.
+    </p>
+    <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+      <a href="#join-us" class="btn btn-primary animate-bounce">Únete a nosotros</a>
+      <WhatsAppCTA />
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .animate-fade-in-delay {
+    animation: fadeIn 1s ease-out 0.5s both;
+  }
+</style>
+

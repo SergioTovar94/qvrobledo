@@ -1,3 +1,17 @@
-<header>
-    Esto es el Header
+---
+import { Image } from 'astro:assets';
+---
+
+<header class="fixed w-full z-50 bg-[#6f2dbd]/80 backdrop-blur-md">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <a href="/" class="text-2xl font-bold">Robledo Vuelve</a>
+    <nav>
+      <ul class="flex space-x-6">
+        <li><a href="#why-robledo" class="hover:text-[#f46036] transition-colors">¿Por qué Robledo?</a></li>
+        <li><a href="#get-involved" class="hover:text-[#f46036] transition-colors">Participa</a></li>
+        <li><a href="#join-us" class="btn btn-primary">Únete</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
+
