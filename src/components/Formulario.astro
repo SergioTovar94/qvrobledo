@@ -1,45 +1,49 @@
 ---
-import { z } from 'zod';
-import { getCountries } from 'libphonenumber-js';
+import { z } from "zod";
+import { getCountries } from "libphonenumber-js";
 
 async function getUserIP() {
   try {
-    const res = await fetch('https://api64.ipify.org?format=json');
+    const res = await fetch("https://api64.ipify.org?format=json");
     const data = await res.json();
-    return data.ip || '0.0.0.0';
+    return data.ip || "0.0.0.0";
   } catch (error) {
-    console.error('Error obteniendo IP:', error);
-    return '0.0.0.0';
+    console.error("Error obteniendo IP:", error);
+    return "0.0.0.0";
   }
 }
 
 function getDeviceType() {
   const userAgent = navigator.userAgent;
-  if (/Mobi|Android/i.test(userAgent)) return 'móvil';
-  return 'escritorio';
+  if (/Mobi|Android/i.test(userAgent)) return "móvil";
+  return "escritorio";
 }
 
 function getFlagEmoji(countryCode) {
   const codePoints = countryCode
     .toUpperCase()
-    .split('')
-    .map(char => 127397 + char.charCodeAt());
+    .split("")
+    .map((char) => 127397 + char.charCodeAt());
   return String.fromCodePoint(...codePoints);
 }
 
-const countries = getCountries().map((country) => ({
-  code: country,
-  name: new Intl.DisplayNames(['es'], { type: 'region' }).of(country),
-  flag: getFlagEmoji(country),
-})).sort((a, b) => a.name.localeCompare(b.name));
+const countries = getCountries()
+  .map((country) => ({
+    code: country,
+    name: new Intl.DisplayNames(["es"], { type: "region" }).of(country),
+    flag: getFlagEmoji(country),
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
 const formSchema = z.object({
-  email: z.string().email('Correo inválido'),
-  nombre: z.string().min(2, 'Nombre muy corto'),
-  apellido: z.string().min(2, 'Apellido muy corto'),
+  email: z.string().email("Correo inválido"),
+  nombre: z.string().min(2, "Nombre muy corto"),
+  apellido: z.string().min(2, "Apellido muy corto"),
   telefono: z.string().optional(),
   countryCode: z.string(),
-  aceptaTerminos: z.literal(true, { errorMap: () => ({ message: 'Debes aceptar los términos' }) }),
+  aceptaTerminos: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar los términos" }),
+  }),
 });
 ---
 
@@ -56,99 +60,190 @@ const formSchema = z.object({
 
   <div class="form-group">
     <label for="apellido">Apellido*:</label>
-    <input type="text" id="apellido" name="apellido" required class="form-input" />
+    <input
+      type="text"
+      id="apellido"
+      name="apellido"
+      required
+      class="form-input"
+    />
   </div>
 
   <div class="form-group phone-group">
     <label for="telefono">Teléfono:</label>
     <div class="phone-input-container">
       <select name="countryCode" id="countryCode" class="country-select">
-        {countries.map((country) => (
-          <option value={country.code}>
-            {country.flag} {country.name} (+{country.code})
-          </option>
-        ))}
+        {
+          countries.map((country) => (
+            <option value={country.code}>
+              {country.flag} {country.name} (+{country.code})
+            </option>
+          ))
+        }
       </select>
-      <input type="tel" id="telefono" name="telefono" class="form-input phone-input" />
+      <input
+        type="tel"
+        id="telefono"
+        name="telefono"
+        class="form-input phone-input"
+      />
     </div>
   </div>
 
   <div class="form-group checkbox-group">
-    <input type="checkbox" id="aceptaTerminos" name="aceptaTerminos" required class="checkbox-input" />
-    <label for="aceptaTerminos" class="checkbox-label">Acepto el uso de datos personales</label>
+    <input
+      type="checkbox"
+      id="aceptaTerminos"
+      name="aceptaTerminos"
+      required
+      class="checkbox-input"
+    />
+    <label for="aceptaTerminos" class="checkbox-label"
+      >Acepto el uso de datos personales</label
+    >
   </div>
 
   <button type="submit" class="submit-button">Enviar</button>
 </form>
 
 <script>
-  document.querySelector('.form-container').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evitar que se envíe el formulario tradicional
+  document
+    .querySelector(".form-container")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault(); // Evitar que se envíe el formulario tradicional
 
-    // Obtener datos del formulario
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+      // Obtener datos del formulario
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
 
-    // Obtener la IP y tipo de dispositivo
-    const ip = await fetch('https://api64.ipify.org?format=json').then(res => res.json()).then(data => data.ip);
-    const dispositivo = /Mobi|Android/i.test(navigator.userAgent) ? 'móvil' : 'escritorio';
+      // Obtener la IP y tipo de dispositivo
+      const ip = await fetch("https://api64.ipify.org?format=json")
+        .then((res) => res.json())
+        .then((data) => data.ip);
+      const dispositivo = /Mobi|Android/i.test(navigator.userAgent)
+        ? "móvil"
+        : "escritorio";
 
-    // Formatear el teléfono
-    const telefono = data.telefono ? `+${data.countryCode}${data.telefono.replace(/\D/g, '')}` : '';
+      // Formatear el teléfono
+      const telefono = data.telefono
+        ? `+${data.countryCode}${data.telefono.replace(/\D/g, "")}`
+        : "";
 
-    // Crear el payload de acuerdo a la estructura requerida
-    const payload = {
-      respuestas: [
-        {
-          formulario_id: 1,
-          datos_personales: {
-            nombre: data.nombre,
-            apellido: data.apellido,
-            contacto: {
-              celular: telefono,
-              correo: data.email
-            }
+      // Crear el payload de acuerdo a la estructura requerida
+      const payload = {
+        respuestas: [
+          {
+            formulario_id: 1,
+            datos_personales: {
+              nombre: data.nombre,
+              apellido: data.apellido,
+              contacto: {
+                celular: telefono,
+                correo: data.email,
+              },
+            },
+            metadata: {
+              acepta_terminos: data.aceptaTerminos === "on",
+              ip_registro: ip || "0.0.0.0",
+              dispositivo: dispositivo,
+            },
           },
-          metadata: {
-            acepta_terminos: data.aceptaTerminos === 'on',
-            ip_registro: ip || '0.0.0.0',
-            dispositivo: dispositivo,
+        ],
+      };
+
+      try {
+        const response = await fetch(
+          "http://192.168.1.88:8000/api/formularios/api-v1-formularios/",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload), // Enviar como JSON
           }
+        );
+
+        if (response.ok) {
+          console.log("Formulario enviado correctamente");
+        } else {
+          console.error("Error al enviar formulario");
         }
-      ]
-    };
-
-    try {
-      const response = await fetch('http://192.168.1.88:8000/api/formularios/api-v1-formularios/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload) // Enviar como JSON
-      });
-
-      if (response.ok) {
-        console.log('Formulario enviado correctamente');
-      } else {
-        console.error('Error al enviar formulario');
+      } catch (error) {
+        console.error("Error al procesar el formulario:", error);
       }
-    } catch (error) {
-      console.error('Error al procesar el formulario:', error);
-    }
-  });
+    });
 </script>
 
 <style>
-  .form-container { max-width: 500px; margin: 0 auto; padding: 2rem; background-color: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-  .form-group { margin-bottom: 1.5rem; }
-  .form-input { width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
-  .phone-group { display: flex; flex-direction: column; }
-  .phone-input-container { display: flex; gap: 0.5rem; }
-  .country-select { width: 40%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
-  .phone-input { width: 60%; }
-  .checkbox-group { display: flex; align-items: center; gap: 0.5rem; }
-  .checkbox-input { width: 1.2rem; height: 1.2rem; }
-  .checkbox-label { font-size: 0.9rem; color: #666; }
-  .submit-button { width: 100%; padding: 0.75rem; background-color: #4f46e5; color: white; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background-color 0.2s; }
-  .submit-button:hover { background-color: #4338ca; }
-  label { display: block; margin-bottom: 0.5rem; color: #374151; font-weight: 500; }
-  select option { font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji", sans-serif; }
+  .form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  .phone-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .phone-input-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .country-select {
+    width: 40%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  .phone-input {
+    width: 60%;
+  }
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .checkbox-input {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  .checkbox-label {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  .submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .submit-button:hover {
+    background-color: #4338ca;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #374151;
+    font-weight: 500;
+  }
+  select option {
+    font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji",
+      "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji", sans-serif;
+  }
 </style>
