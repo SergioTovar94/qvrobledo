@@ -1,17 +1,222 @@
 ---
-import { Image } from 'astro:assets';
+import Rasgado from '/src/assets/Rasgado.svg?raw';
 ---
 
-<header class="fixed w-full z-50 bg-[#6f2dbd]/80 backdrop-blur-md">
-  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-    <a href="/" class="text-2xl font-bold">Robledo Vuelve</a>
-    <nav>
-      <ul class="flex space-x-6">
-        <li><a href="#why-robledo" class="hover:text-[#f46036] transition-colors">¿Por qué Robledo?</a></li>
-        <li><a href="#get-involved" class="hover:text-[#f46036] transition-colors">Participa</a></li>
-        <li><a href="#join-us" class="btn btn-primary">Únete</a></li>
-      </ul>
-    </nav>
+<header class="relative w-full h-[30vh] sm:h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center sm:bg-[top] md:bg-[center_top]"
+        style="background-image: url('/src/assets/Fondo.webp');">
+  <div class="hola">Hola</div>
+  <div class="w-full max-w-[90%] sm:max-w-[640px] md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1200px]  flex flex-row sm:flex-row items-center justify-center relative">
+    
+    <!-- Contenedor para imagen y frase -->
+    <div class="flex flex-row sm:flex-row items-center justify-evenly w-full">
+      
+      <!-- Imagen de Jorge Robledo -->
+      <div class="contenedor-fondo1">
+        <img 
+          src="/src/assets/Robledo1.webp" 
+          alt="Jorge Robledo" 
+          class="w-full max-w-[600px] sm:max-w-[200px] md:max-w-[500px] lg:max-w-[520px] xl:max-w-[540px] h-auto"
+        />
+      </div>
+      <!-- Frase formada con imágenes de letras -->
+      <div class="contenedor-texto">
+        <div class="fila-imagenes">
+          <img src="/src/assets/Q.png" alt="Q" class="imagen-letra" />
+          <img src="/src/assets/u.png" alt="u" class="imagen-letra" />
+          <img src="/src/assets/i.png" alt="i" class="imagen-letra" />
+          <img src="/src/assets/e.png" alt="e" class="imagen-letra" />
+          <img src="/src/assets/r 1.png" alt="r" class="imagen-letra" />
+          <img src="/src/assets/o.png" alt="o" class="imagen-letra" />
+      
+          <img src="/src/assets/Q.png" alt="Q" class="imagen-letra imagen-espaciada" />
+          <img src="/src/assets/u.png" alt="u" class="imagen-letra" />
+          <img src="/src/assets/e.png" alt="e" class="imagen-letra" />
+        </div>
+      
+        <div class="fila-imagenes">
+          <img src="/src/assets/v.png" alt="v" class="imagen-letra" />
+          <img src="/src/assets/u.png" alt="u" class="imagen-letra" />
+          <img src="/src/assets/e.png" alt="e" class="imagen-letra" />
+          <img src="/src/assets/l.png" alt="l" class="imagen-letra" />
+          <img src="/src/assets/v.png" alt="v" class="imagen-letra" />
+          <img src="/src/assets/a.png" alt="a" class="imagen-letra" />
+        </div>
+      
+        <div class="fila-imagenes">
+          <img src="/src/assets/R 2.png" alt="R" class="imagen-letra" />
+          <img src="/src/assets/o.png" alt="o" class="imagen-letra" />
+          <img src="/src/assets/b.png" alt="b" class="imagen-letra" />
+          <img src="/src/assets/l.png" alt="l" class="imagen-letra" />
+          <img src="/src/assets/e.png" alt="e" class="imagen-letra" />
+          <img src="/src/assets/d.png" alt="d" class="imagen-letra" />
+          <img src="/src/assets/o.png" alt="o" class="imagen-letra" />
+        </div>
+      </div>
+      
+      
+
+      
+    </div>
   </div>
+
+  <!-- SVG de efecto rasgado en la parte inferior -->
+  <div class="rasgado" set:html={Rasgado} />
+
 </header>
 
+<style>
+  /* cONTENEDOR FONDO */
+.contenedor-fondo1 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+/* Contenedor principal del texto y las imágenes */
+.contenedor-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem; /* mt-4 */
+  margin-left: 0;
+  position: relative;
+  z-index: 10;
+}
+
+
+
+
+
+/* Contenedor de las filas de imágenes */
+.fila-imagenes {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+/* Tamaños de las imágenes */
+.imagen-letra {
+  height: 2rem; /* h-8 */
+}
+
+/* Ajustes para la segunda "Q" en la frase */
+.imagen-espaciada {
+  margin-left: 0.5rem; /* ml-2 */
+}
+
+ /* Imagen SVG del papel rasgado */
+ .rasgado {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 10; /* Asegura que esté por encima del fondo */
+  }
+
+/* Tablet (≥640px) */
+@media (min-width: 640px) { /* sm */
+  .contenedor-fondo1 {
+    width: 50%;
+    margin-left: -3rem; /* -ml-12 */
+  }
+  .rasgado {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 10; /* Asegura que esté por encima del fondo */
+  }
+
+  .contenedor-texto {
+    margin-top: 0; /* sm:mt-0 */
+    margin-right: 211px; /* sm:mr-[211px] */
+  }
+
+  .fila-imagenes {
+    gap: 0.25rem; /* sm:gap-1 */
+  }
+
+  .imagen-letra {
+    height: 0.25rem; /* sm:h-1 */
+  }
+  .imagen-espaciada {
+    margin-left: 2.5rem; /* sm:ml-10 */
+  }
+}
+
+/* PC / Escritorio (≥1024px) */
+@media (min-width: 1024px) { /* lg */
+  .contenedor-fondo1 {
+    width: 100%;
+    margin-left: -380px;
+    margin-bottom: -50px;
+  }
+  .contenedor-texto {
+    margin-left: -300px; /* lg:ml-[-300px] */
+  }
+
+  .imagen-letra {
+    height: 5rem; /* lg:h-20 */
+  }
+
+  .rasgado {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 10; 
+    margin-bottom: 3px;
+  }
+
+  .hola{
+    margin-top: -580px;
+    margin-left: -100px; 
+    color:white;
+  }
+}
+
+/* Mobile (<640px) */
+@media (max-width: 639px) { /* xs y mobile */
+  .contenedor-fondo1 {
+    margin-left: -100px; /* -ml-8 */
+    margin-bottom: -10px;
+    width: 60%;
+  }
+  .rasgado {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 10; 
+    margin-bottom: 42px;
+  }
+
+  .hola{
+    margin-top: -200px; 
+    color:white;
+  }
+
+  .contenedor-texto {
+    width: 100px;
+    margin-left: 0px;
+    margin-right: 10px;
+  }
+
+  .imagen-letra {
+    height: 25px; /* md:h-16 */
+  }
+}
+/* Pantallas medianas (≥768px) */
+@media (min-width: 768px) { /* md */
+  .imagen-letra {
+    height: 4rem; /* md:h-16 */
+  }
+}
+
+</style>
