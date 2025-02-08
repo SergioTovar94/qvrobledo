@@ -1,0 +1,73 @@
+---
+import Formulario from '@components/Formulario.astro';
+---
+
+<section class="contenedor relative w-full h-[90vh] sm:h-screen flex items-center justify-center"
+  style="background-image: url('/src/assets/fondoform.webp');">
+  <div class="w-full max-w-[90%] sm:max-w-[640px] md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1200px] flex flex-col sm:flex-row items-center justify-between relative">
+
+    <!--  Texto (Izquierda en PC, Arriba en Móvil) -->
+    <div class="texto-container text-center sm:text-left self-start sm:self-start mb-4 sm:mb-0 max-w-[90%] sm:max-w-[500px]">
+      <p class="text-azul font-barriecito text-2xl sm:text-5xl font-bold leading-snug sm:leading-tight">
+        Si tú también quieres <br>
+        que vuelva Robledo,
+      </p>
+      <p class="text-white font-barriecito text-2xl sm:text-5xl font-bold mt-1 sm:mt-2">
+        Súmate
+      </p>
+    </div>
+
+    <!-- Formulario (Derecha en PC, Abajo en Móvil) -->
+    <div class="formulario-container w-full sm:w-auto mt-6 sm:mt-0">
+      <Formulario />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Contenedor Principal */
+  .contenedor {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Texto */
+  .texto-container {
+    max-width: 500px; /* Para escritorio */
+  }
+
+  /* Estilos de los textos */
+  .text-azul {
+    color: #2f455f;
+  }
+
+  .text-white {
+    color: #fff;
+  }
+
+  /* Fuente personalizada Barriecito */
+  @font-face {
+    font-family: 'Barriecito';
+    src: url('/src/assets/fonts/Barriecito/Barriecito-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .font-barriecito {
+    font-family: 'Barriecito', sans-serif;
+  }
+
+  /*  Diseño Responsive */
+  @media (max-width: 639px) { /* Móvil */
+    .texto-container {
+      text-align: center;
+      max-width: 90%; /* Limita el ancho para evitar desbordes */
+    }
+
+    .formulario-container {
+      width: 90%;
+    }
+  }
+</style>
